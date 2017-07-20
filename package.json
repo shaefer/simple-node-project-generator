@@ -1,0 +1,32 @@
+{
+  "name": "generator-simple-node-project",
+  "version": "0.0.1",
+  "description": "Basic Template For Staring a Simple Node Project No Frills (few assumptions)",
+  "author": "Daniel Shaefer",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shaefer/simple-node-project-generator/issues"
+  },
+  "homepage": "https://github.com/shaefer/simple-node-project-generator#readme",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "dependencies": {
+    "yeoman-generator": "^1.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/shaefer/simple-node-project-generator.git"
+  },
+  "keywords": [
+    "yeoman",
+    "yeoman-generator",
+    "node",
+    "generator",
+    "simple"
+  ],
+  "files": [
+    "generators"
+  ]
+}
