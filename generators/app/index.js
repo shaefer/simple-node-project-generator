@@ -1,20 +1,62 @@
 var Generator = require('yeoman-generator');
+var PackageJson = require('./packageJsonPrompts');
 
 module.exports = class extends Generator {
-    constructor(args, opts) {
-        super(args, opts);
 
-        this.argument('subprojectExecution', { type: String, required: false });
+    prompting() {
+        this.log('prompting step');
+    
+        const prompts = PackageJson.getPackageJsonPrompts();
+        this.log('promptCount', prompts.length);
+
+        return this.prompt(prompts).then((answers) => {
+            this.log('Prompting Promise Returned');
+            const packageJson = this._buildPackageJson(answers);
+            this.log(packageJson);
+            this.packageJson = packageJson
+        });
     }
 
-    main() {
-        this.log('method 1 just ran: ' + this.options.subprojectExecution);
-        if (!this.options.subprojectExecution) {
-            this._fullProject();
+    writing() {
+        this.log("writing step");
+        this.fs.writeJSON(this.destinationPath('package.json'), this.packageJson);
+    }
+
+    install() {
+        this.log('do our npm install here');
+        this.npmInstall(['mocha'], { 'save-dev': true });
+    }
+
+    _buildPackageJson(res) {
+        this.log(res);
+        const packageJson = {};
+        if (res.name) {
+            packageJson.name = res.name
         }
-    }
-
-    _fullProject() {
-        this.log('running whole project flow');
+        if (res.version) {
+            packageJson.version = res.version
+        }
+        if (res.description) {
+            packageJson.description = res.description
+        }
+        if (res.main) {
+            packageJson.main = res.main
+        }
+        if (res.test) {
+            packageJson.scripts = { test: res.test }
+        }
+        if (res.keywords && !res.keywords.match(/^\w?$/)) {
+            packageJson.keywords = res.keywords.split(' ')
+        }
+        if (res.repo) {
+            packageJson.repository = res.repo
+        }
+        if (res.author) {
+            packageJson.author = res.author
+        }
+        if (res.license) {
+            packageJson.license = res.license
+        }
+        return packageJson;
     }
 };

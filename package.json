@@ -10,7 +10,7 @@
   "homepage": "https://github.com/shaefer/simple-node-project-generator#readme",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "mocha --opts ./test/mocha.opts ./test"
   },
   "dependencies": {
     "yeoman-generator": "^1.0.0"

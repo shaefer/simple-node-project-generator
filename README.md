@@ -1,4 +1,4 @@
-# simple-node-project-generator
+# Simple Node Project Yeoman Generator
 
 Yeoman Generator to produce the basic building blocks of a Node app without a bunch of extras. (Some opinions included)
 
