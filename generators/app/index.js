@@ -20,11 +20,33 @@ module.exports = class extends Generator {
     writing() {
         this.log("writing step");
         this.fs.writeJSON(this.destinationPath('package.json'), this.packageJson);
+        this.fs.copyTpl(
+            this.templatePath('mocha.opts'),
+            this.destinationPath('test/mocha.opts')
+        );
+        this.fs.copyTpl(
+            this.templatePath('.gitignore'),
+            this.destinationPath('.gitignore')
+        );
+        this.fs.copyTpl(
+            this.templatePath('README.md'),
+            this.destinationPath('README.md')
+        );
+        this.fs.copyTpl(
+            this.templatePath('.babelrc'),
+            this.destinationPath('.babelrc')
+        );
     }
 
     install() {
-        this.log('do our npm install here');
+        this.log('npm install mocha --save-dev');
         this.npmInstall(['mocha'], { 'save-dev': true });
+        this.log('npm install babel-core --save-dev');
+        this.npmInstall(['babel-core'], { 'save-dev': true}); //necessary for babel and mocha.opts babel-core/register
+        this.log('npm install babel-preset-es2015 --save-dev');
+        this.npmInstall(['babel-preset-es2015'], { 'save-dev': true}); //used for .babelrc to provide es2015 support //maybe consider "env" preset
+        this.log('npm install babel-preset-stage-2 --save-dev');
+        this.npmInstall(['babel-preset-stage-2'], { 'save-dev': true}); // used for .babelrc to provide support for spread operator.
     }
 
     _buildPackageJson(res) {
