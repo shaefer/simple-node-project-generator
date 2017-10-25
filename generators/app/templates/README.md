@@ -1,13 +1,13 @@
-# <project_name>
+# <%= projectName %>
 
-[<img src="travis-ci-button-path">](https://travis-ci.org/<githubusername>/<project_name>)
+[<img src="travis-ci-button-path">](https://travis-ci.org/<githubusername>/<%= projectName %>)
 
 A small node project.
 
 Uses ES6 (Babel), Webpack
 
 Tests
-* <code>npm test</code> (uses mocha)
+* <code><%= npmTestCommand %></code>
 
 ## Setup
 * Assumes node installed

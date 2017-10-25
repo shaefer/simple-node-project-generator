@@ -11,7 +11,8 @@ const skipPromptOpts = {
     'skip-repo': true,
     'skip-keywords': false,
     'skip-author': false,
-    'skip-license': false
+    'skip-license': false,
+    'skip-awssdk': false
 };
 
 const promptDefaults = {
@@ -23,7 +24,8 @@ const promptDefaults = {
     //repo: '',
     keywords: 'node',
     //author: '',
-    license: 'MIT'
+    license: 'MIT',
+    awssdk: false,
 }
 
 const getPromptDefault = (name, override =  {}) => {
@@ -43,6 +45,10 @@ const createPrompt = (name, message, store = false, type = 'input', defaultOverr
         return prompt;
 }
 
+const createBooleanPrompt = (name, message, store = false, type='confirm', defaultOverride = {}) => {
+    return createPrompt(name, message, store, type, defaultOverride);
+}
+
 const getPackageJsonPrompts = (defaultOverrides = {}, skipPromptOptions = skipPromptOpts) => {
     let prompts = []
 
@@ -55,12 +61,12 @@ const getPackageJsonPrompts = (defaultOverrides = {}, skipPromptOptions = skipPr
     prompts.push(createPrompt('keywords'));
     prompts.push(createPrompt('author', '', true));
     prompts.push(createPrompt('license'));
-    console.log(prompts.length);
+    prompts.push(createBooleanPrompt('awssdk'));
 
     prompts = prompts.filter((x) => { 
         if (x) return true;
     });
-    console.log(prompts.length);
+
     return prompts;
 }
 
